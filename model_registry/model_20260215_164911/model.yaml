@@ -1,0 +1,73 @@
+model_type: LogisticRegression
+training_timestamp: '2026-02-15T16:49:11.392350'
+random_state: 42
+test_size: 0.2
+cross_validation_folds: 10
+n_features: 16
+features:
+- num__customer_id
+- num__age
+- num__tenure_months
+- num__monthly_charges
+- num__total_charges
+- num__support_calls
+- num__late_payments
+- num__avg_monthly_value
+- num__support_call_ratio
+- num__payment_risk
+- cat__contract_type_Month-to-month
+- cat__contract_type_One year
+- cat__contract_type_Two year
+- cat__internet_service_DSL
+- cat__internet_service_Fiber optic
+- cat__internet_service_No
+hyperparameters:
+  C: 1.0
+  class_weight: balanced
+  dual: false
+  fit_intercept: true
+  intercept_scaling: 1
+  l1_ratio: 0.0
+  max_iter: 1000
+  n_jobs: -1
+  penalty: l2
+  random_state: 42
+  solver: lbfgs
+  tol: 0.0001
+  verbose: 0
+  warm_start: false
+coefficients:
+  num__customer_id: -0.005668688897056151
+  num__age: 0.001700870446941463
+  num__tenure_months: -0.1888534813141703
+  num__monthly_charges: -0.002793904006129499
+  num__total_charges: 0.009017814248710253
+  num__support_calls: 0.11229005357978569
+  num__late_payments: -0.002174856502207412
+  num__avg_monthly_value: -0.0005361879672213558
+  num__support_call_ratio: -0.02450538899754772
+  num__payment_risk: 0.09591256546459427
+  cat__contract_type_Month-to-month: 0.6827899547270949
+  cat__contract_type_One year: -0.4994325354570545
+  cat__contract_type_Two year: -0.5049687572663266
+  cat__internet_service_DSL: -0.4328538063537823
+  cat__internet_service_Fiber optic: 0.5178206821086543
+  cat__internet_service_No: -0.40657821375116593
+test_metrics:
+  accuracy: 0.64385
+  precision: 0.5420766292394953
+  recall: 0.5965605095541401
+  f1_score: 0.5680150403299169
+  roc_auc: 0.6354819008676049
+  confusion_matrix:
+  - - 8194
+    - 3956
+  - - 3167
+    - 4683
+cross_validation_metrics:
+  cv_accuracy_mean: 0.644825
+  cv_accuracy_std: 0.005653041216902638
+  cv_f1_mean: 0.5686440139942793
+  cv_f1_std: 0.006502261776671123
+  cv_auc_mean: 0.6966760417146388
+  cv_auc_std: 0.006127896900545539

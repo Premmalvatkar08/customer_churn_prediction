@@ -9,3 +9,17 @@ xgboost
 matplotlib
 seaborn
 tqdm
+
+
+git 
+vscode
+docker
+postman
+git hub account
+wsl for windows
+
+extension
+python
+pylance 
+rainbowcsv
+gitlens
