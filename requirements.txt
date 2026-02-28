@@ -9,7 +9,7 @@ xgboost
 matplotlib
 seaborn
 tqdm
-
+plotly
 
 git 
 vscode
