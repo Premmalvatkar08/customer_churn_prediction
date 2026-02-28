@@ -64,3 +64,37 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
         )
 
         return X
+
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.base import BaseEstimator, TransformerMixin
+from src.logger.logger import get_logger
+
+logger = get_logger(__name__)
+
+
+class LabelEncodingTransformer(BaseEstimator, TransformerMixin):
+    """
+    Applies Label Encoding to categorical features
+    """
+
+    def __init__(self, categorical_features=None):
+        self.categorical_features = categorical_features
+        self.encoders = {}
+
+    def fit(self, X, y=None):
+        for feature in self.categorical_features:
+            le = LabelEncoder()
+            le.fit(X[feature])
+            self.encoders[feature] = le
+
+        return self
+
+    def transform(self, X):
+        X = X.copy()
+
+        for feature, encoder in self.encoders.items():
+            logger.info(f"Label encoding feature: {feature}")
+            X[feature] = encoder.transform(X[feature])
+
+        return X

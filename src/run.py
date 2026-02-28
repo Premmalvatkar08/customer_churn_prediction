@@ -108,3 +108,4 @@ class PipelineRunner:
 if __name__ == "__main__":
     runner = PipelineRunner(CONFIG_PATH)
     runner.run()
+
