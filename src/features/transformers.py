@@ -65,36 +65,30 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
 
         return X
 
-import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-from sklearn.base import BaseEstimator, TransformerMixin
-from src.logger.logger import get_logger
-
-logger = get_logger(__name__)
 
 
-class LabelEncodingTransformer(BaseEstimator, TransformerMixin):
+class CategoricalEncoder(BaseEstimator, TransformerMixin):
     """
-    Applies Label Encoding to categorical features
+    Encode categorical columns using LabelEncoder
     """
-
-    def __init__(self, categorical_features=None):
-        self.categorical_features = categorical_features
+    
+    def __init__(self, categorical_cols=None):
+        self.categorical_cols = categorical_cols
         self.encoders = {}
-
+    
     def fit(self, X, y=None):
-        for feature in self.categorical_features:
-            le = LabelEncoder()
-            le.fit(X[feature])
-            self.encoders[feature] = le
-
+        if self.categorical_cols is None:
+            self.categorical_cols = X.select_dtypes(include=['object']).columns
+        
+        for col in self.categorical_cols:
+            self.encoders[col] = LabelEncoder()
+            self.encoders[col].fit(X[col].astype(str))
+        
         return self
-
+    
     def transform(self, X):
-        X = X.copy()
-
-        for feature, encoder in self.encoders.items():
-            logger.info(f"Label encoding feature: {feature}")
-            X[feature] = encoder.transform(X[feature])
-
-        return X
+        X_copy = X.copy()
+        for col in self.categorical_cols:
+            X_copy[col] = self.encoders[col].transform(X_copy[col].astype(str))
+        return X_copy
