@@ -16,3 +16,102 @@ model_registry/saved_models/*.pkl
 .vscode/
 .idea/
 .vscode/
+# =========================
+# IDE / Editor files
+# =========================
+.vscode/
+.idea/
+*.code-workspace
+
+# =========================
+# Python cache & compiled files
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =========================
+# Virtual environments
+# =========================
+venv/
+env/
+.venv/
+ENV/
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+log/
+
+# =========================
+# Data files
+# =========================
+data/
+dataset/
+datasets/
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.json
+*.parquet
+
+# =========================
+# Model artifacts / registry
+# =========================
+models/
+model/
+model_registry/
+artifacts/
+checkpoints/
+*.h5
+*.pkl
+*.joblib
+*.onnx
+*.pt
+*.pth
+
+# =========================
+# Experiment tracking
+# =========================
+mlruns/
+mlflow/
+wandb/
+tensorboard/
+runs/
+
+# =========================
+# Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+*.key
+*.pem
+
+# =========================
+# Build / distribution
+# =========================
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.bak
+*.swp
