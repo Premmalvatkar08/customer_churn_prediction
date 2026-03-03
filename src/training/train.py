@@ -18,6 +18,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
 from imblearn.over_sampling import SMOTE
+from xgboost import XGBClassifier
 
 from src.logger.logger import get_logger
 from src.schema.train_schema import TrainConfig
@@ -109,6 +110,16 @@ class Trainer:
             model = LogisticRegression(
                 **lr_params,
                 random_state=self.config.random_state
+            )
+
+        elif model_type == "xgboost":
+
+            xgb_params = model_config.xgboost.dict()
+
+            model = XGBClassifier(
+                **xgb_params,
+                random_state=self.config.random_state,
+                use_label_encoder=False
             )
 
         else:

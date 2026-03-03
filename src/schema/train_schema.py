@@ -21,10 +21,26 @@ class RandomForestConfig(BaseModel):
     n_jobs: int = -1
 
 
+class XGBoostConfig(BaseModel):
+    n_estimators: int = 100
+    max_depth: int = 5
+    learning_rate: float = 0.1
+    subsample: float = 0.8
+    colsample_bytree: float = 0.8
+    min_child_weight: int = 1
+    reg_alpha: float = 0.0
+    reg_lambda: float = 1.0
+    objective: str = "binary:logistic"
+    eval_metric: str = "logloss"
+    verbosity: int = 0
+    n_jobs: int = -1
+
+
 class ModelConfig(BaseModel):
     type: str
     logistic_regression: Optional[LogisticRegressionConfig]
     random_forest: Optional[RandomForestConfig]
+    xgboost: Optional[XGBoostConfig]
 
 
 class TrainConfig(BaseModel):
