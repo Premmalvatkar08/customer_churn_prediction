@@ -17,6 +17,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
+from imblearn.over_sampling import SMOTE
+from xgboost import XGBClassifier
 
 from src.logger.logger import get_logger
 from src.schema.train_schema import TrainConfig
@@ -108,6 +110,16 @@ class Trainer:
             model = LogisticRegression(
                 **lr_params,
                 random_state=self.config.random_state
+            )
+
+        elif model_type == "xgboost":
+
+            xgb_params = model_config.xgboost.dict()
+
+            model = XGBClassifier(
+                **xgb_params,
+                random_state=self.config.random_state,
+                use_label_encoder=False
             )
 
         else:
@@ -246,7 +258,21 @@ class Trainer:
 
         logger.info("Train-test split completed")
 
-        pipeline = self._build_pipeline(X_train)
+        # Log class distribution before SMOTE
+        logger.info(f"Class distribution before SMOTE:\n{y_train.value_counts()}")
+
+        # -----------------------------------------------------
+        # Apply SMOTE to handle imbalanced data
+        # -----------------------------------------------------
+        smote = SMOTE(random_state=self.config.random_state)
+        X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
+
+        logger.info(f"Class distribution after SMOTE:\n{pd.Series(y_train_smote).value_counts()}")
+        logger.info(f"Original training set size: {X_train.shape[0]}")
+        logger.info(f"SMOTE balanced training set size: {X_train_smote.shape[0]}")
+
+        # Build pipeline BEFORE using it
+        pipeline = self._build_pipeline(X_train_smote)
 
         # -----------------------------------------------------
         # Stratified K-Fold Cross Validation
@@ -254,18 +280,17 @@ class Trainer:
         logger.info("Starting Stratified K-Fold Cross Validation")
         cv_metrics = self.model_cross_validation(
             pipeline,
-            X_train,
-            y_train
+            X_train_smote,
+            y_train_smote
         )
         logger.info("Cross validation completed: %s", cv_metrics)
-
 
         # -----------------------------------------------------
         # Final Training on Full Training Data
         # -----------------------------------------------------
-        pipeline.fit(X_train, y_train)
+        pipeline.fit(X_train_smote, y_train_smote)
 
-        logger.info("Final model training completed")
+        logger.info("Final model training completed on SMOTE-balanced data")
 
         # -----------------------------------------------------
         # Evaluation on Hold-out Test Set

@@ -1,0 +1,70 @@
+model_type: RandomForestClassifier
+training_timestamp: '2026-03-02T23:45:38.778318'
+random_state: 42
+test_size: 0.2
+cross_validation_folds: 10
+n_features: 12
+features:
+- num__customer_id
+- num__age
+- num__tenure_months
+- num__monthly_charges
+- num__total_charges
+- num__contract_type
+- num__internet_service
+- num__support_calls
+- num__late_payments
+- num__avg_monthly_value
+- num__support_call_ratio
+- num__payment_risk
+hyperparameters:
+  bootstrap: true
+  ccp_alpha: 0.0
+  class_weight: null
+  criterion: gini
+  max_depth: 10
+  max_features: sqrt
+  max_leaf_nodes: null
+  max_samples: null
+  min_impurity_decrease: 0.0
+  min_samples_leaf: 2
+  min_samples_split: 5
+  min_weight_fraction_leaf: 0.0
+  monotonic_cst: null
+  n_estimators: 200
+  n_jobs: -1
+  oob_score: false
+  random_state: 42
+  verbose: 0
+  warm_start: false
+feature_importance:
+  num__customer_id: 0.040183082611177715
+  num__age: 0.029174529963463765
+  num__tenure_months: 0.06013493045690892
+  num__monthly_charges: 0.0369572034966652
+  num__total_charges: 0.048901585229717034
+  num__contract_type: 0.40519269611435715
+  num__internet_service: 0.24946587855562485
+  num__support_calls: 0.0409943035203553
+  num__late_payments: 0.014012328174131321
+  num__avg_monthly_value: 0.036452836625401455
+  num__support_call_ratio: 0.0316535497811268
+  num__payment_risk: 0.006877075471070539
+test_metrics:
+  accuracy: 0.6641
+  precision: 0.6027223230490019
+  recall: 0.4230573248407643
+  f1_score: 0.4971556886227545
+  roc_auc: 0.6214463578936331
+  confusion_matrix:
+  - - 9961
+    - 2189
+  - - 4529
+    - 3321
+cross_validation_metrics:
+  cv_accuracy_mean: 0.6633375
+  cv_accuracy_std: 0.006314925276675897
+  cv_f1_mean: 0.4946836083488762
+  cv_f1_std: 0.011384649982241988
+  cv_auc_mean: 0.6978367914030377
+  cv_auc_std: 0.005724061046049754

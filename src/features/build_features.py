@@ -2,13 +2,15 @@ import os
 import yaml
 import pandas as pd
 
+
 from sklearn.pipeline import Pipeline
 
 from src.logger.logger import get_logger
 from src.schema.data_schema import DataConfig
 from src.features.transformers import (
     MissingValueImputer,
-    FeatureGenerator
+    FeatureGenerator,
+    CategoricalEncoder
 )
 
 logger = get_logger(__name__)
@@ -36,7 +38,8 @@ class FeatureBuilder:
         self.pipeline = Pipeline(
             steps=[
                 ("imputer", MissingValueImputer()),
-                ("feature_generator", FeatureGenerator())
+                ("feature_generator", FeatureGenerator()),
+                ("encoder", CategoricalEncoder())
             ]
         )
 

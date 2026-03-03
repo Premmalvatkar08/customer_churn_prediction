@@ -64,3 +64,31 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
         )
 
         return X
+
+from sklearn.preprocessing import LabelEncoder
+
+
+class CategoricalEncoder(BaseEstimator, TransformerMixin):
+    """
+    Encode categorical columns using LabelEncoder
+    """
+    
+    def __init__(self, categorical_cols=None):
+        self.categorical_cols = categorical_cols
+        self.encoders = {}
+    
+    def fit(self, X, y=None):
+        if self.categorical_cols is None:
+            self.categorical_cols = X.select_dtypes(include=['object']).columns
+        
+        for col in self.categorical_cols:
+            self.encoders[col] = LabelEncoder()
+            self.encoders[col].fit(X[col].astype(str))
+        
+        return self
+    
+    def transform(self, X):
+        X_copy = X.copy()
+        for col in self.categorical_cols:
+            X_copy[col] = self.encoders[col].transform(X_copy[col].astype(str))
+        return X_copy
